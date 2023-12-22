@@ -36,3 +36,8 @@ spec:
           env:
             - name: DATABASE_URL
               value: "postgresql://postgres:senha@nodejs-postgres-db.default:5432/demo"
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
