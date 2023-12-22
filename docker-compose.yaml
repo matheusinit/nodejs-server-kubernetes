@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  database:
+    container_name: demo_database
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - /usr/docker/postgresql/demo_database/:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+  api-rest:
+    container_name: demo_nodejs
+    image: local/nodejs-k8s:0.1
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database

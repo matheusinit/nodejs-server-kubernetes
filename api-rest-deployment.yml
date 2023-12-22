@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-api-rest
+  labels:
+    app: nodejs-api-rest
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+  selector:
+    app: nodejs-api-rest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-api-rest
+  labels:
+    app: nodejs-api-rest
+spec:
+  selector:
+    matchLabels:
+      app: nodejs-api-rest
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nodejs-api-rest
+    spec:
+      containers:
+        - image: matheusinit/nodejs-k8s:0.1
+          name: nodejs-api-rest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://postgres:senha@nodejs-postgres-db.default:5432/demo"
