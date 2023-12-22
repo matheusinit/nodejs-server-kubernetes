@@ -21,6 +21,10 @@ The following tools are used:
  - [Prisma](https://prisma.io/)
  - [PostgreSQL](https://www.postgresql.org/)
 
+In the project is using an API Rest with the image `matheusinit/nodejs-k8s`, in version 0.1. There are two routes:
+
+- `/` - to get a hello world from Kubernetes Pod 
+- `/users` - to insert a dumby user data and return it the list of users
 
 ### Setup
 
