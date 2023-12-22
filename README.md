@@ -10,8 +10,10 @@ The focus of this project is to run multiple instances of the API REST in a Kube
 The following tools are needed to run this project:
  - [Docker](https://www.docker.com/)
  - [Docker Compose](https://docs.docker.com/compose/)
+ - [Minikube](https://minikube.sigs.k8s.io/)
  - [jq](https://stedolan.github.io/jq/)
  - [curl](https://curl.se/)
+ - [wrk](https://github.com/wg/wrk)
 
 The following tools are used:
  - [NodeJS](https://nodejs.org/en/)
@@ -26,7 +28,7 @@ In the project is using an API Rest with the image `matheusinit/nodejs-k8s`, in 
 - `/` - to get a hello world from Kubernetes Pod 
 - `/users` - to insert a dumby user data and return it the list of users
 
-### Setup
+### Setup with Docker (development)
 
 To run this application in your machine (development):
 
@@ -46,5 +48,29 @@ To check if application is running:
 curl http://0.0.0.0:3000 | jq 
 ```
 
+### Setup with Kubernetes (production-like)
 
+Start minikube to run Kubernetes on your machine:
 
+```bash
+minikube start
+```
+> View documentation of Minikube to more information
+
+To view Kubernetes metrics in Minikube:
+
+```bash
+minikube dashboard
+```
+
+To run load test in NodeJS API Rest cluster to increase the number the pods:
+
+```bash
+wrk -t4 -c300 -d60s http://{SERVICE_HOST}:{SERVICE_PORT}/users
+```
+
+Meaning:
+ - `{SERVICE_HOST}` - API REST with NodeJS service host
+ - `{SERVICE_PORT}` - API REST with NodeJS service port
+
+To view service url with host and port use `minikube service nodejs-api-rest --url`
