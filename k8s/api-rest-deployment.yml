@@ -35,7 +35,10 @@ spec:
             - containerPort: 3000
           env:
             - name: DATABASE_URL
-              value: "postgresql://postgres:senha@nodejs-postgres-db.default:5432/demo?connection_limit=9&pool_timeout=0"
+              valueFrom:
+                secretKeyRef:
+                  name: nodejs-secrets
+                  key: DATABASE_URL
           resources:
             limits:
               cpu: 500m
