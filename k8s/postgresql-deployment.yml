@@ -42,6 +42,7 @@ spec:
       labels:
         app: nodejs-postgres-db
     spec:
+      serviceAccountName: nodejs-server-sa
       containers:
         - image: postgres:14
           name: nodejs-postgres-db
